@@ -11,36 +11,36 @@ import net.minecraft.server.World;
 
 public class ItemBiere extends Item
 {
-    public ItemBiere(int var1)
+    public ItemBiere(int i)
     {
-        super(var1);
-        this.maxStackSize = 1;
+        super(i);
+        d(1);
         this.a(CreativeModeTab.h);
     }
 
-    public ItemStack onEaten(ItemStack itemstack, World world, EntityHuman entityhuman)
+    public ItemStack b(ItemStack itemstack, World world, EntityHuman entityhuman)
     {
-        if (!entityhuman.abilities.canFly)
+        if (!entityhuman.abilities.canInstantlyBuild)
         {
-            --itemstack.b;
+            itemstack.count--;
         }
 
         if (!world.isStatic)
         {
-          entityhuman.b();
+            entityhuman.bB();
         	entityhuman.addEffect(new MobEffect(MobEffectList.BLINDNESS.id, 13, 0));
         	entityhuman.addEffect(new MobEffect(MobEffectList.CONFUSION.id, 500, 2));
         	entityhuman.addEffect(new MobEffect(MobEffectList.SLOWER_MOVEMENT.id, 300, 0));
         	entityhuman.addEffect(new MobEffect(MobEffectList.WITHER.id, 50, 0));
         }
 
-        return --itemstack.count <= 0 ? new ItemStack(Item.biereVide) : itemstack;
+        return itemstack.count > 0 ? itemstack : new ItemStack(Item.BIEREVIDE);
     }
 
     /**
      * How long it takes to use or consume an item
      */
-    public int getMaxItemUseDuration(ItemStack var1)
+    public int c_(ItemStack var1)
     {
         return 32;
     }
@@ -48,7 +48,7 @@ public class ItemBiere extends Item
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
-    public EnumAnimation getItemUseAction(ItemStack var1)
+    public EnumAnimation b_(ItemStack var1)
     {
         return EnumAnimation.DRINK;
     }
@@ -56,9 +56,9 @@ public class ItemBiere extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityHuman entityhuman)
+    public ItemStack a(ItemStack itemstack, World world, EntityHuman entityhuman)
     {
-        entityhuman.setItemInUse(itemstack, getMaxItemUseDuration(itemstack));
+        entityhuman.a(itemstack, c_(itemstack));
         return itemstack;
     }
 
